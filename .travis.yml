@@ -5,3 +5,14 @@ before_install:
   - docker build -t rakes4499/docker-frontend -f Dockerfile.dev .
 script:
   - docker run -e CI=true rakes4499/docker-frontend npm run test
+deploy:
+  provider: elasticbeanstalk
+  region: "us-west-2"
+  app: "docker-frontend"
+  env: "Dockerfrontend-env"
+  bucket_name: "elasticbeanstalk-us-west-2-595570207297"
+  bucket_path: "docker-frontend"
+  on:
+    branch: master
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key: "$AWS_SECRET_KEY"
